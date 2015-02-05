@@ -1,0 +1,5 @@
+/.bundle
+/vendor/bundle
+/vendor/bin
+/settings.rb
+/db/*.sqlite3
