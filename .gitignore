@@ -3,3 +3,4 @@
 /vendor/bin
 /settings.rb
 /db/*.sqlite3
+/node_modules
