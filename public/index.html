@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>money</title>
+    <link rel="stylesheet" href="/dist/app.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  </head>
+  <body v-cloak>
+    <div class="container">
+      <div class="header">
+        <h1>Money</h1>
+        <ul class="nav">
+          <li v-if="currentUser"><a v-pref="/">home</a></li>
+          <li v-if="currentUser"><a v-pref="/">log out</a></li>
+          <li v-if="!currentUser"><a v-pref="/login">login</a></li>
+          <li v-if="!currentUser"><a v-pref="/register">register</a></li>
+        </ul>
+      </div>
+      <!-- <p v-if="currentUser">welcome <span v-text="currentUser.name"></span></p> -->
+      <div v-component="{{currentView}}"></div>
+    </div>
+    <script src="/dist/app.js"></script>
+  </body>
+</html>

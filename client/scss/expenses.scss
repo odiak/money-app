@@ -1,0 +1,77 @@
+.main {
+  .month-nav {
+    .prev-month,
+    .current-month,
+    .next-month {
+      display: inline;
+    }
+
+    .current-month {
+      &:before,
+      &:after {
+        content: "|";
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .expense-form {
+    margin-bottom: 15px;
+    padding: 5px;
+    border: 1px solid #ccc;
+
+    input, button {
+      padding: 4px;
+      vertical-align: middle;
+      line-height: 1.4;
+      border-radius: 3px;
+      border: 1px solid #bbb;
+      outline: 0;
+    }
+
+    input {
+      margin-right: 5px;
+      height: 18px;
+    }
+
+    button {
+      padding: 4px;
+      background: #ddd;
+    }
+
+    .date {
+      width: 150px;
+    }
+    .amount {
+      width: 80px;
+    }
+    .subject {
+      width: 200px;
+    }
+  }
+
+  .total {
+    margin: 20px 0 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  table.expenses {
+    border-collapse: collapse;
+    width: 100%;
+    > tbody {
+      td, th {
+        padding: 8px;
+      }
+
+      td {
+        border-top: 1px solid #ccc;
+
+        &.amount {
+          text-align: right;
+        }
+      }
+    }
+  }
+}

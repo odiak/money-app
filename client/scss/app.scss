@@ -1,0 +1,52 @@
+@import "variables";
+@import "form";
+@import "expenses";
+@import "container";
+
+[v-cloak] {
+  display: none;
+}
+
+html {
+  // font-family: $font-family-base;
+  font-family: monospace;
+  font-size: $font-size-base;
+  color: #333;
+}
+
+button, input {
+  font-size: $font-size-base;
+}
+
+a:link,
+a:visited {
+  color: #33b;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+
+  > h1 {
+    text-align: center;
+  }
+
+  > .nav {
+    padding: 0;
+    text-align: center;
+    font-size: 15px;
+
+    > li {
+      margin-right: 6px;
+      display: inline-block;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
