@@ -1,0 +1,2 @@
+SESSION_EXPIRE_AFTER = 30.days
+SESSION_SECRET = 'xxxxxx'
