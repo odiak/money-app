@@ -4,3 +4,4 @@
 /settings.rb
 /db/*.sqlite3
 /node_modules
+/public/dist
