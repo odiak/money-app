@@ -3,7 +3,7 @@ Bundler.require
 
 require 'sinatra/namespace'
 require 'sinatra/reloader'
-require 'SecureRandom'
+require 'securerandom'
 require 'digest/sha1'
 require './settings'
 
