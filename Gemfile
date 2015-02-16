@@ -8,6 +8,7 @@ gem 'rake'
 gem 'rack-parser'
 gem 'oj'
 gem 'active_model_serializers'
+gem 'unicorn'
 
 group :development do
   gem 'shotgun'
