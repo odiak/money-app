@@ -172,11 +172,15 @@ class MoneyApp < Sinatra::Base
       end
 
       get '/?' do
+        ensure_signed_in!
+
         categories = current_user.categories.reorder(:name)
         json(categories, root: :categories)
       end
 
       post '/?' do
+        ensure_signed_in!
+
         category = current_user.categories.new(category_params)
         if category.save
           json(category)
