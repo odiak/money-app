@@ -5,6 +5,7 @@ var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var webpack = require('gulp-webpack');
 var sass = require('gulp-sass');
+var watch = require('gulp-watch');
 
 var DIST_DIR = './public/dist';
 
@@ -19,6 +20,9 @@ var WEBPACK_OPTIONS = {
 var SASS_FILE = './client/scss/app.scss';
 var SASS_FILES = './client/scss/**/*.scss';
 var CSS_FILE = 'app.css';
+var SASS_OPTIONS = {
+  errLogToConsole: true
+};
 
 var NODE_ENV = process.env.NODE_ENV || 'development';
 var isProduction = (NODE_ENV === 'production');
@@ -33,7 +37,7 @@ gulp.task('webpack', function () {
 
 gulp.task('sass', function() {
   gulp.src(SASS_FILE)
-    .pipe(sass())
+    .pipe(sass(SASS_OPTIONS))
     .pipe(concat(CSS_FILE))
     .pipe(gulpIf(isProduction, minifyCSS()))
     .pipe(gulp.dest(DIST_DIR));
@@ -41,7 +45,11 @@ gulp.task('sass', function() {
 
 gulp.task('default', ['webpack', 'sass']);
 
-gulp.task('watch', function(){
-  gulp.watch(JS_FILES, ['webpack']);
-  gulp.watch(SASS_FILES, ['sass']);
+gulp.task('watch', function () {
+  watch(JS_FILES, function () {
+    gulp.start('webpack');
+  });
+  watch(SASS_FILES, function () {
+    gulp.start('sass');
+  });
 });
