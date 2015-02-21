@@ -6,34 +6,38 @@ var request = require('superagent');
 
 Vue.directive('pref', require('./directives/pref'));
 
-Vue.component('main',     require('./components/main'));
-Vue.component('login',    require('./components/login'));
-Vue.component('register', require('./components/register'));
+Vue.component('main',         require('./components/main'));
+Vue.component('new-expense',  require('./components/new-expense'));
+Vue.component('login',        require('./components/login'));
+Vue.component('register',     require('./components/register'));
 
 var app = require('./base-app');
 
-function setView (name) {
-  return function(ctx, next) {
+function setView (name, loginRequired) {
+  if (loginRequired == null) loginRequired = true;
+
+  return function(ctx) {
     console.log(name);
     app.currentView = name;
-    next();
+
+    if (loginRequired && !app.currentUser) {
+      loadUser();
+    }
   };
 }
 
-function loadUser (ctx, next) {
-  if (!app.currentUser) {
-    request.get('/api/user', function(res) {
-      if (res.ok) {
-        app.currentUser = res.body;
-      } else {
-        page.redirect('/login');
-      }
-    });
-  }
-  next();
+function loadUser () {
+  request.get('/api/user', function(res) {
+    if (res.ok) {
+      app.currentUser = res.body;
+    } else {
+      page.redirect('/login');
+    }
+  });
 }
 
-page('/',         setView('main'), loadUser);
-page('/login',    setView('login'));
-page('/register', setView('register'));
+page('/',             setView('main'));
+page('/expenses/new', setView('new-expense'));
+page('/login',        setView('login', false));
+page('/register',     setView('register', false));
 page();
