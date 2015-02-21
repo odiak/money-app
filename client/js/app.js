@@ -4,8 +4,6 @@ var request = require('superagent');
 
 // Vue.config.debug = true;
 
-Vue.directive('pref', require('./directives/pref'));
-
 Vue.component('main',         require('./components/main'));
 Vue.component('new-expense',  require('./components/new-expense'));
 Vue.component('login',        require('./components/login'));
