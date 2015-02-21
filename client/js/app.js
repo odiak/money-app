@@ -4,12 +4,12 @@ var request = require('superagent');
 
 // Vue.config.debug = true;
 
-Vue.component('main',          require('./components/main'));
-Vue.component('new-expense',   require('./components/new-expense'));
-Vue.component('edit-expense',  require('./components/edit-expense'));
-Vue.component('expense-form',  require('./components/expense-form'));
-Vue.component('login',         require('./components/login'));
-Vue.component('register',      require('./components/register'));
+Vue.component('main',         require('./components/main'));
+Vue.component('new-expense',  require('./components/new-expense'));
+Vue.component('edit-expense', require('./components/edit-expense'));
+Vue.component('expense-form', require('./components/expense-form'));
+Vue.component('login',        require('./components/login'));
+Vue.component('register',     require('./components/register'));
 
 var app = require('./base-app');
 
