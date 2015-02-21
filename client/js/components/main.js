@@ -19,7 +19,9 @@ var template =
         h('td.subject', {vText: 'subject'}),
         h('td.amount', {vText: 'amount'}),
         h('td',
-          h('a', {href: '/expenses/{{id}}/edit'}, 'edit')))));
+          h('a', {href: '/expenses/{{id}}/edit'}, 'edit'),
+          ' &middot; ',
+          h('a', {href: '#', vOn: 'click: deleteExpense($data)'}, 'delete')))));
 
 
 module.exports = {
@@ -46,6 +48,21 @@ module.exports = {
       request.get('/api/expenses', function (res) {
         if (!res.ok) return;
         that.expenses = res.body.expenses;
+      });
+    },
+
+    deleteExpense: function (expense) {
+      if (!confirm('Are you sure to delete this expense?')) return;
+      var i = this.expenses.indexOf(expense);
+      var that = this;
+      if (i === -1) return;
+
+      this.expenses.splice(i, 1);
+      request.del('/api/expenses/' + expense.id, function (res) {
+        if (!res) {
+          that.expenses.splice(i, 0, expense);
+          alert('Failed to delete');
+        }
       });
     }
   },
