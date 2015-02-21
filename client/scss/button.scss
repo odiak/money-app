@@ -1,0 +1,17 @@
+.btn {
+  padding: 4px 6px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  height: 26px;
+  background: #ddd;
+  outline: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: #ccc;
+  }
+
+  &:active {
+    background: #bbb;
+  }
+}

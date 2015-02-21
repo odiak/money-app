@@ -1,5 +1,8 @@
 @import "variables";
+@import "mixins/clearfix";
+@import "grid";
 @import "form";
+@import "button";
 @import "expenses";
 @import "container";
 
@@ -7,15 +10,20 @@
   display: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html {
-  // font-family: $font-family-base;
-  font-family: monospace;
+  font-family: $font-family-base;
+  // font-family: monospace;
   font-size: $font-size-base;
   color: #333;
 }
 
-button, input {
+button, input, select, textarea {
   font-size: $font-size-base;
+  font-family: $font-family-base;
 }
 
 a:link,

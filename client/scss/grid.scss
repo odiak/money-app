@@ -1,0 +1,22 @@
+$selectors: ();
+
+@for $i from 1 through $grid-nums {
+  $length: 100% * ($i / $grid-nums);
+
+  $selectors: $selectors, unquote('.col-#{$i}');
+
+  .col-#{$i} {
+    width: $length;
+  }
+
+  .col-offset-#{$i} {
+    margin-left: $length;
+  }
+}
+
+#{$selectors} {
+  float: left;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+}
