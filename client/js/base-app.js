@@ -4,7 +4,8 @@ var app = new Vue({
   el: 'body',
   data: {
     currentView: '',
-    currentUser: null
+    currentUser: null,
+    currentContext: null
   }
 });
 

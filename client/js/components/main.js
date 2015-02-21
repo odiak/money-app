@@ -17,7 +17,9 @@ var template =
         h('td.date', {vText: 'date'}),
         h('td.category', {vText: 'category && category.name'}),
         h('td.subject', {vText: 'subject'}),
-        h('td.amount', {vText: 'amount'}))));
+        h('td.amount', {vText: 'amount'}),
+        h('td',
+          h('a', {href: '/expenses/{{id}}/edit'}, 'edit')))));
 
 
 module.exports = {
