@@ -147,6 +147,13 @@ class MoneyApp < Sinatra::Base
         json(expenses, root: :expenses)
       end
 
+      get '/:id' do
+        ensure_signed_in!
+
+        expense = current_user.expenses.find(params[:id])
+        json(expense)
+      end
+
       post '/?' do
         expense = current_user.expenses.new(expense_params)
         if expense.save
