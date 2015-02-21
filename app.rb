@@ -67,8 +67,12 @@ class MoneyApp < Sinatra::Base
       end
     end
 
-    def json_with_status(code, hash)
+    def status(code)
       code = STATUS_CODES[code] if STATUS_CODES.key?(code)
+      super(code)
+    end
+
+    def json_with_status(code, hash)
       status(code)
       json(hash)
     end
@@ -170,6 +174,14 @@ class MoneyApp < Sinatra::Base
         else
           json_with_status(:bad_request, error: expense.errors.to_a.first)
         end
+      end
+
+      delete '/:id' do
+        ensure_signed_in!
+
+        expense = current_user.expenses.find(params[:id])
+        expense.destroy
+        status(:no_content)
       end
     end
 
