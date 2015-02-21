@@ -146,7 +146,7 @@ class MoneyApp < Sinatra::Base
         # date_range = date..date.end_of_month
 
         expenses = current_user.expenses
-          .reorder(date: :desc)
+          .reorder(date: :desc, created_at: :desc)
 
         json(expenses, root: :expenses)
       end
