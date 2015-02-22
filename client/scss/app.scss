@@ -50,11 +50,16 @@ a:hover {
     font-size: 15px;
 
     > li {
-      margin-right: 6px;
-      display: inline-block;
-      &:last-child {
-        margin-right: 0;
+      &:before {
+        content: "･ ";
+        margin-left: 3px;
+        margin-right: 3px;
       }
+      &:first-child:before {
+        display: none;
+      }
+
+      display: inline-block;
     }
   }
 }
