@@ -10,6 +10,7 @@ Vue.component('edit-expense', require('./components/edit-expense'));
 Vue.component('expense-form', require('./components/expense-form'));
 Vue.component('login',        require('./components/login'));
 Vue.component('register',     require('./components/register'));
+Vue.component('not-found',    require('./components/not-found'));
 
 var app = require('./base-app');
 
@@ -42,4 +43,5 @@ page('/expenses/new',             setView('new-expense'));
 page('/expenses/:expenseId/edit', setView('edit-expense'));
 page('/login',                    setView('login', false));
 page('/register',                 setView('register', false));
+page('*',                         setView('not-found'));
 page();
