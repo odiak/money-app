@@ -18,9 +18,16 @@ function setView (name, loginRequired) {
   if (loginRequired == null) loginRequired = true;
 
   return function(ctx) {
-    console.log(name);
-    app.currentView = name;
     app.currentContext = ctx;
+
+    if (app.currentView !== name) {
+      app.currentView = name;
+    } else {
+      app.currentView = '';
+      Vue.nextTick(function () {
+        app.currentView = name;
+      });
+    }
 
     if (loginRequired && !app.currentUser) {
       loadUser();
@@ -39,6 +46,7 @@ function loadUser () {
 }
 
 page('/',                         setView('main'));
+page('/expenses/:year-:month',    setView('main'));
 page('/expenses/new',             setView('new-expense'));
 page('/expenses/:expenseId/edit', setView('edit-expense'));
 page('/login',                    setView('login', false));
