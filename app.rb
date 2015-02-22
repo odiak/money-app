@@ -14,7 +14,7 @@ ActiveRecord::Base.establish_connection(
   adapter: 'sqlite3',
   database: 'db/data.sqlite3'
 )
-Time.zone = 'Tokyo'
+Time.zone_default = Time.find_zone!('Tokyo')
 Oj.default_options = { mode: :compat }
 
 class MoneyApp < Sinatra::Base
