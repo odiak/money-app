@@ -67,7 +67,9 @@ class MoneyApp < Sinatra::Base
       end
     end
 
-    def status(code)
+    def status(code=nil)
+      return super unless code
+
       code = STATUS_CODES[code] if STATUS_CODES.key?(code)
       super(code)
     end
