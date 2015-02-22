@@ -134,18 +134,18 @@ class MoneyApp < Sinatra::Base
         end
       end
 
-      get '/?' do
+      get '/:year-:month' do
         ensure_signed_in!
 
-        # date =
-        #   if params[:date].present?
-        #     Date.parse("#{params[:month]}-1")
-        #   else
-        #     Date.today.beginning_of_month
-        #   end
-        # date_range = date..date.end_of_month
+        today = Time.zone.today
+        year = params.fetch('year', today.year).to_i
+        month = params.fetch('month', today.month).to_i
+
+        beginning = Date.new(year, month, 1)
+        date_range = beginning..beginning.end_of_month
 
         expenses = current_user.expenses
+          .where(date: date_range)
           .reorder(date: :desc, created_at: :desc)
 
         json(expenses, root: :expenses)
