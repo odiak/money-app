@@ -90,9 +90,35 @@ class MoneyApp < Sinatra::Base
       content_type(:json)
       Oj.dump(target)
     end
+
+    def csrf_token
+      session[:csrf_token] ||= SecureRandom.base64(30)
+    end
+
+    def verified_request?
+      request.get? || request.head? || env['HTTP_X_CSRF_TOKEN'] == csrf_token
+    end
+
+    def set_csrf_token_to_cookie
+      response.set_cookie('CSRF-TOKEN',
+        value: csrf_token,
+        max_age: 1.week.to_s,
+        path: '/'
+      )
+    end
   end
 
   namespace '/api' do
+    before do
+      next unless current_user
+
+      set_csrf_token_to_cookie
+
+      unless verified_request?
+        halt json_with_status(:bad_request, error: 'Invalid token!')
+      end
+    end
+
     namespace '/user' do
       get '/?' do
         if (user = current_user)
