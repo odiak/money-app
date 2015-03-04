@@ -127,3 +127,31 @@ function html(tag, attrs, content) {
 }
 
 module.exports = html;
+
+
+// fromArray(tag, [attrs], [content...])
+//
+function fromArray (array) {
+  var tag, attrs, content;
+  tag = array.shift();
+  if (array.length === 0) return html(tag);
+
+  if (array[0] && typeof array[0] === 'object' && !Array.isArray(array[0])) {
+    attrs = array.shift();
+  } else {
+    attrs = {};
+  }
+
+  content = '';
+  array.forEach(function (c) {
+    if (Array.isArray(c)) {
+      content += fromArray(c);
+    } else {
+      content += c;
+    }
+  });
+
+  return html(tag, attrs, content);
+}
+
+html.fromArray = fromArray;
