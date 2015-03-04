@@ -52,6 +52,7 @@ module.exports = {
   data: function () {
     return {
       expenses: [],
+      groupedExpenses: [],
 
       currentMonth: null,
       previousMonth: null,
@@ -69,12 +70,30 @@ module.exports = {
   },
 
   methods: {
+    groupExpensesByDate: function (expenses) {
+      var groupedExpenses = [], group = null;
+      expenses.forEach(function (expense) {
+        if (expense.date !== (group && group.date)) {
+          group = {
+            date: expense.date,
+            expenses: [expense]
+          };
+          groupedExpenses.push(group);
+        } else {
+          group.expenses.push(expense);
+        }
+      });
+
+      return groupedExpenses;
+    },
+
     loadExpenses: function () {
       var that = this;
       var url = '/api/expenses/' + this.formatForParam(this.currentMonth);
       request.get(url, function (res) {
         if (!res.ok) return;
         that.expenses = res.body.expenses;
+        that.groupedExpenses = that.groupExpensesByDate(that.expenses);
       });
     },
 
