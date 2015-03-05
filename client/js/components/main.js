@@ -26,7 +26,10 @@ var template = h.fromArray(
     ['.expense-group', {vRepeat: 'groupedExpenses'},
       ['.date', '{{date | strftime dateFormat}}'],
       ['table.expenses',
-        ['tr', {vRepeat: 'expenses'},
+        ['tr', {vRepeat: 'expenses',
+            vHammer: 'panleft: handlePanLeft($event, $data), \
+              panright: handlePanRight($event, $data)',
+            vClass: 'open: open'},
           ['td.category', {vText: 'category && category.name'}],
           ['td.subject', {vText: 'subject'}],
           ['td.amount', {vText: 'amount | number'}],
@@ -57,6 +60,8 @@ module.exports = {
       nextMonth: null,
 
       dateFormat: '%d %b %Y',
+
+      lastOpened: null
     };
   },
 
@@ -138,6 +143,25 @@ module.exports = {
 
     formatForParam: function (date) {
       return strftime(date, '%Y-%m');
+    },
+
+    handlePanLeft: function (e, ex) {
+      if (e.distance < 100) return;
+      if (!('open' in ex)) {
+        ex.$add('open', true);
+      } else {
+        ex.open = true;
+      }
+      if (this.lastOpened && this.lastOpened.id !== ex.id) {
+        this.lastOpened.open = false;
+      }
+      this.lastOpened = ex;
+    },
+
+    handlePanRight: function (e, ex) {
+      if (e.distance < 100) return;
+      if (!('open' in ex)) return;
+      ex.open = false;
     }
   },
 
