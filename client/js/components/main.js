@@ -24,14 +24,15 @@ var template = h.fromArray(
     ],
     ['.total', 'Total: {{total}}'],
     ['.expense-group', {vRepeat: 'groupedExpenses'},
-      ['p', '{{date}}'],
+      ['.date', '{{date | strftime dateFormat}}'],
       ['table.expenses',
         ['tr', {vRepeat: 'expenses'},
           ['td.category', {vText: 'category && category.name'}],
           ['td.subject', {vText: 'subject'}],
-          ['td.amount', {vText: 'amount'}],
-          ['td',
-            ['a', {href: '/expenses/{{id}}/edit'}, 'edit'],
+          ['td.amount', {vText: 'amount | number'}],
+          ['td.buttons',
+            ['a', {href: '/expenses/{{id}}/edit'},
+              'edit'],
             ' &middot; ',
             ['a', {href: '#', vOn: 'click: deleteExpense($data, $event)'},
               'delete']
@@ -53,7 +54,9 @@ module.exports = {
 
       currentMonth: null,
       previousMonth: null,
-      nextMonth: null
+      nextMonth: null,
+
+      dateFormat: '%d %b %Y',
     };
   },
 
