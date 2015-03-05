@@ -1,5 +1,9 @@
 var Hammer = require('hammerjs');
 
+Hammer.defaults.cssProps.touchSelect = 'inherit';
+Hammer.defaults.cssProps.userDrag = 'inherit';
+Hammer.defaults.cssProps.userSelect = 'inherit';
+
 module.exports = {
   acceptStatement: true,
 
