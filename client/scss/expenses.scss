@@ -24,60 +24,105 @@
     }
   }
 
-  .expense-form {
-    margin-bottom: 15px;
-    padding: 5px;
-    border: 1px solid #ccc;
-
-    input, button {
-      padding: 4px;
-      vertical-align: middle;
-      line-height: 1.4;
-      border-radius: 3px;
-      border: 1px solid #bbb;
-      outline: 0;
-    }
-
-    input {
-      margin-right: 5px;
-      height: 18px;
-    }
-
-    button {
-      padding: 4px;
-      background: #ddd;
-    }
-
-    .date {
-      width: 150px;
-    }
-    .amount {
-      width: 80px;
-    }
-    .subject {
-      width: 200px;
-    }
-  }
-
   .total {
     margin: 20px 0 10px 0;
     font-size: 18px;
     font-weight: bold;
   }
 
-  table.expenses {
-    border-collapse: collapse;
-    width: 100%;
-    > tbody {
-      td, th {
-        padding: 8px;
-      }
+  > .expense-group {
+    margin-bottom: 40px;
 
-      td {
-        border-top: 1px solid #ccc;
+    > .date {
+      margin-bottom: 10px;
+      text-align: center;
+      // font-weight: bold;
+      font-size: 1.5em;
+      color: #888;
+    }
 
-        &.amount {
-          text-align: right;
+    > table.expenses {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+      // font-size: 1.1em;
+
+      > tbody {
+        > tr {
+          &:hover {
+            background: #eee;
+          }
+
+          &.open {
+            td {
+              // background: tomato !important;
+            }
+          }
+          @media (max-width: 600px) {
+            &.open {
+              > td {
+                &.category {
+                  display: none;
+                }
+                &.buttons {
+                  display: table-cell;
+                }
+              }
+            }
+
+            > td.buttons {
+              display: none;
+            }
+          }
+
+          > td,
+          > th {
+            padding: 8px 8px;
+          }
+
+          &:last-child {
+            > td {
+              border-bottom: 1px solid #ddd;
+            }
+          }
+
+          > td {
+            border-top: 1px solid #ddd;
+
+            &.category {
+              width: 5em;
+              // font-weight: bold;
+            }
+
+            &.subject {
+              // width: 70%;
+            }
+
+            &.amount {
+              text-align: right;
+              // font-weight: bold;
+              width: 4em;
+              font-size: 1.3em;
+            }
+
+            &.buttons {
+              padding-left: 4px;
+              padding-right: 4px;
+              width: 6em;
+              > a {
+                &:link,
+                &:visited,
+                &:hover {
+                  color: #777;
+                  text-decoration: none;
+                }
+
+                &:hover {
+                  color: #666;
+                }
+              }
+            }
+          }
         }
       }
     }
