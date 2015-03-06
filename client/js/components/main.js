@@ -22,7 +22,7 @@ var template = h.fromArray(
           '{{strftime(nextMonth, "%b %Y")}} &raquo;'],
       ],
     ],
-    ['.total', 'Total: {{total}}'],
+    ['.total', 'Total: {{total | number}}'],
     ['.expense-group', {vRepeat: 'groupedExpenses'},
       ['.date', '{{date | strftime dateFormat}}'],
       ['table.expenses',
