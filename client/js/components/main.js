@@ -143,25 +143,6 @@ module.exports = {
     formatForParam: function (date) {
       return strftime(date, '%Y-%m');
     },
-
-    handlePanLeft: function (e, ex) {
-      if (e.distance < 100) return;
-      if (!('open' in ex)) {
-        ex.$add('open', true);
-      } else {
-        ex.open = true;
-      }
-      if (this.lastOpened && this.lastOpened.id !== ex.id) {
-        this.lastOpened.open = false;
-      }
-      this.lastOpened = ex;
-    },
-
-    handlePanRight: function (e, ex) {
-      if (e.distance < 100) return;
-      if (!('open' in ex)) return;
-      ex.open = false;
-    }
   },
 
   created: function () {
