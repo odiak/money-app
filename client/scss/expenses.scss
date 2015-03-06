@@ -53,28 +53,6 @@
             background: #eee;
           }
 
-          &.open {
-            td {
-              // background: tomato !important;
-            }
-          }
-          @media (max-width: 600px) {
-            &.open {
-              > td {
-                &.category {
-                  display: none;
-                }
-                &.buttons {
-                  display: table-cell;
-                }
-              }
-            }
-
-            > td.buttons {
-              display: none;
-            }
-          }
-
           > td,
           > th {
             padding: 8px 8px;
@@ -89,19 +67,16 @@
           > td {
             border-top: 1px solid #ddd;
 
-            &.category {
-              width: 5em;
-              // font-weight: bold;
-            }
-
-            &.subject {
-              // width: 70%;
+            &.description {
+              > .category {
+                color: #777;
+                margin-bottom: 0.2em;
+              }
             }
 
             &.amount {
               text-align: right;
-              // font-weight: bold;
-              width: 4em;
+              width: 4.5em;
               font-size: 1.3em;
             }
 
@@ -119,6 +94,7 @@
 
                 &:hover {
                   color: #666;
+                  text-decoration: underline;
                 }
               }
             }
