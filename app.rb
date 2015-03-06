@@ -153,6 +153,11 @@ class MoneyApp < Sinatra::Base
           json_with_status(:bad_request, error: 'Invalid username or password')
         end
       end
+
+      put '/logout' do
+        sign_out
+        status :no_content
+      end
     end
 
     namespace '/expenses' do

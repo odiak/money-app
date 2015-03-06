@@ -21,6 +21,20 @@ var app = new Vue({
           page.show('/login');
         }
       });
+    },
+
+    logout: function (e) {
+      e.preventDefault();
+
+      if (!confirm('Are you sure to logging out?')) return;
+      var that = this;
+
+      request.put('/api/user/logout', function (res) {
+        if (res.ok) {
+          that.currentUser = null;
+          page.show('/login');
+        }
+      });
     }
   }
 });
