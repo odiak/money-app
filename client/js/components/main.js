@@ -40,6 +40,11 @@ var template = h.fromArray(
               'delete']
           ],
         ],
+        ['tr.group-total', {vIf: 'expenses.length > 1'},
+          ['td.description'],
+          ['td.amount', {vText: 'groupTotal($data) | number'}],
+          ['td.buttons'],
+        ],
       ],
     ],
   ]
@@ -162,6 +167,12 @@ module.exports = {
     formatForParam: function (date) {
       return strftime(date, '%Y-%m');
     },
+
+    groupTotal: function (group) {
+      return group.expenses.reduce(function (acc, ex) {
+        return acc + ex.amount;
+      }, 0);
+    }
   },
 
   created: function () {

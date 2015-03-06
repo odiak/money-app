@@ -64,6 +64,12 @@
             }
           }
 
+          &.group-total {
+            > td {
+              border-bottom: 0;
+            }
+          }
+
           > td {
             border-top: 1px solid #ddd;
 
