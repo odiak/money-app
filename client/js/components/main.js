@@ -104,17 +104,36 @@ module.exports = {
     deleteExpense: function (expense, e) {
       e.preventDefault();
 
-      if (!confirm('Are you sure to delete this expense?')) return;
-      var i = this.expenses.indexOf(expense);
       var that = this;
+      if (!confirm('Are you sure to delete this expense?')) return;
+
+      request.del('/api/expenses/' + expense.id, function (res) {
+        if (res) {
+          that.removeExpenseFromList(expense);
+        } else {
+          alert('Failed to delete');
+        }
+      });
+    },
+
+    removeExpenseFromList: function (expense) {
+      var that = this;
+      var i = this.expenses.indexOf(expense);
       if (i === -1) return;
 
       this.expenses.splice(i, 1);
-      request.del('/api/expenses/' + expense.id, function (res) {
-        if (!res) {
-          that.expenses.splice(i, 0, expense);
-          alert('Failed to delete');
+
+      this.groupedExpenses.some(function (g, i) {
+        if (g.date !== expense.date) return;
+
+        var j = g.expenses.indexOf(expense);
+        if (j !== -1) {
+          g.expenses.splice(j, 1);
+          if (g.expenses.length === 0) {
+            that.groupedExpenses.splice(i, 1);
+          }
         }
+        return true;
       });
     },
 
