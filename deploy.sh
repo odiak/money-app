@@ -9,11 +9,11 @@ function invoke() {
     eval $1
 }
 
-checksum=$(sha1($0))
+checksum=$(sha1 $0)
 
 if [ $WITHOUT_GIT_PULL == '' ]; then
     invoke 'git pull origin master'
-    if [ $checksum != $(sha1($0)) ]; then
+    if [ $checksum != $(sha1 $0) ]; then
         export WITHOUT_GIT_PULL=1
         exec $0
     fi
