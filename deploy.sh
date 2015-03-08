@@ -5,6 +5,7 @@ function sha1() {
 }
 
 function invoke() {
+    echo
     echo "\$ $1"
     eval $1
 }
