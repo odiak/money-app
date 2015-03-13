@@ -1,6 +1,7 @@
 require 'bundler/setup'
 Bundler.require
 
+require 'sinatra/base'
 require 'sinatra/namespace'
 require 'sinatra/reloader'
 require 'securerandom'
