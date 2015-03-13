@@ -21,7 +21,8 @@ var WEBPACK_OPTIONS = {
   },
   module: {
     loaders: [
-      { test: /\.jsx$/, loader: 'jsx-loader?harmony' }
+      { test: /\.jsx$/, loader: 'jsx-loader' },
+      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' }
     ]
   },
   resolve: {
