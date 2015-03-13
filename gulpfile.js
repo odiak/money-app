@@ -27,15 +27,16 @@ var SASS_OPTIONS = {
 var NODE_ENV = process.env.NODE_ENV || 'development';
 var isProduction = (NODE_ENV === 'production');
 
+gulp.task('build', ['build:js', 'build:css']);
 
-gulp.task('webpack', function () {
+gulp.task('build:js', function () {
   gulp.src(JS_FILE)
     .pipe(webpack(WEBPACK_OPTIONS))
     .pipe(gulpIf(isProduction, uglify()))
     .pipe(gulp.dest(DIST_DIR));
 });
 
-gulp.task('sass', function() {
+gulp.task('build:css', function() {
   gulp.src(SASS_FILE)
     .pipe(sass(SASS_OPTIONS))
     .pipe(concat(CSS_FILE))
@@ -43,13 +44,13 @@ gulp.task('sass', function() {
     .pipe(gulp.dest(DIST_DIR));
 });
 
-gulp.task('default', ['webpack', 'sass']);
+gulp.task('default', ['build']);
 
 gulp.task('watch', function () {
   watch(JS_FILES, function () {
-    gulp.start('webpack');
+    gulp.start('build:js');
   });
   watch(SASS_FILES, function () {
-    gulp.start('sass');
+    gulp.start('build:css');
   });
 });
