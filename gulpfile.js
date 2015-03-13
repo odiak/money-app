@@ -9,11 +9,23 @@ var watch = require('gulp-watch');
 
 var DIST_DIR = './public/dist';
 
-var JS_FILE = './client/js/app.js';
-var JS_FILES = './client/js/**/*.js';
+var JS_FILE = './client/js/app.jsx';
+var JS_FILES = [
+  './client/js/**/*.js',
+  './client/js/**/*.jsx'
+];
 var WEBPACK_OPTIONS = {
+  entry: JS_FILE,
   output: {
     filename: 'app.js'
+  },
+  module: {
+    loaders: [
+      { test: /\.jsx$/, loader: 'jsx-loader' }
+    ]
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
   }
 };
 
@@ -30,7 +42,7 @@ var isProduction = (NODE_ENV === 'production');
 gulp.task('build', ['build:js', 'build:css']);
 
 gulp.task('build:js', function () {
-  gulp.src(JS_FILE)
+  gulp.src('')
     .pipe(webpack(WEBPACK_OPTIONS))
     .pipe(gulpIf(isProduction, uglify()))
     .pipe(gulp.dest(DIST_DIR));
