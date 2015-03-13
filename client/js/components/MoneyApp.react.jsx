@@ -1,9 +1,16 @@
 var React = require('react');
+var Router = require('react-router');
+var {RouteHandler, Link} = Router;
+
+var Header = require('./Header.react');
 
 var MoneyApp = React.createClass({
   render: function () {
     return (
-      <p>hello, react</p>
+      <div className="container">
+        <Header/>
+        <RouteHandler/>
+      </div>
     );
   }
 });
