@@ -6,6 +6,8 @@ var minifyCSS = require('gulp-minify-css');
 var webpack = require('gulp-webpack');
 var sass = require('gulp-sass');
 var watch = require('gulp-watch');
+var childProcess = require('child_process');
+var spawn = childProcess.spawn;
 
 var DIST_DIR = './public/dist';
 
@@ -59,6 +61,7 @@ gulp.task('build:css', function() {
     .pipe(gulp.dest(DIST_DIR));
 });
 
+gulp.task('dev', ['watch', 'rackup']);
 
 gulp.task('watch', ['watch:js', 'watch:css']);
 
@@ -71,5 +74,19 @@ gulp.task('watch:js', function () {
 gulp.task('watch:css', function () {
   watch(SASS_FILES, function () {
     gulp.start('build:css');
+  });
+});
+
+gulp.task('rackup', function (cb) {
+  var port = process.env.RACKUP_PORT || 4000;
+  var rackup = spawn('rackup', ['-p', port]);
+  rackup.stdout.on('data', function (data) {
+    process.stdout.write(data);
+  });
+  rackup.stderr.on('data', function (data) {
+    process.stderr.write(data);
+  });
+  rackup.on('close', function (code) {
+    cb(code !== 0);
   });
 });
