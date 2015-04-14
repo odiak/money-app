@@ -40,6 +40,8 @@ var SASS_OPTIONS = {
 var NODE_ENV = process.env.NODE_ENV || 'development';
 var isProduction = (NODE_ENV === 'production');
 
+gulp.task('default', ['build']);
+
 gulp.task('build', ['build:js', 'build:css']);
 
 gulp.task('build:js', function () {
@@ -57,12 +59,16 @@ gulp.task('build:css', function() {
     .pipe(gulp.dest(DIST_DIR));
 });
 
-gulp.task('default', ['build']);
 
-gulp.task('watch', function () {
+gulp.task('watch', ['watch:js', 'watch:css']);
+
+gulp.task('watch:js', function () {
   watch(JS_FILES, function () {
     gulp.start('build:js');
   });
+});
+
+gulp.task('watch:css', function () {
   watch(SASS_FILES, function () {
     gulp.start('build:css');
   });
