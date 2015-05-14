@@ -20,14 +20,15 @@ var Header = React.createClass({
 
   render: function () {
     var items = false;
-    if (this.state.user.id) {
+    var user = this.state.user;
+    if (user && user.id) {
       items = [
-        <li><Link to="app">home</Link></li>,
+        <li key="home"><Link to="app">home</Link></li>,
       ];
     } else {
       items = [
-        <li><Link to="login">login</Link></li>,
-        <li><Link to="register">register</Link></li>,
+        <li key="login"><Link to="login">login</Link></li>,
+        <li key="register"><Link to="register">register</Link></li>,
       ];
     }
 

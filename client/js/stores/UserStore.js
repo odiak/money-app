@@ -5,13 +5,23 @@ var MoneyAppDispatcher = require('../dispatcher/MoneyAppDispatcher');
 var {ActionTypes} = require('../constants/MoneyAppConstants');
 
 var CHANGE_EVENT = 'change';
+var LOAD_EVENT = 'load';
+var LOGOUT_EVENT = 'logout';
 
-var user = null;
+var currentUserLoaded = false;
+var currentUser = null;
 
 var UserStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function () {
     this.emit(CHANGE_EVENT);
+  },
+
+  emitLoad() {
+    this.emit(LOAD_EVENT, currentUser);
+  },
+
+  emitLogOut() {
   },
 
   addChangeListener: function (callback) {
@@ -23,7 +33,14 @@ var UserStore = assign({}, EventEmitter.prototype, {
   },
 
   get: function () {
-    return user;
+    return currentUser;
+  },
+
+  isLoaded () {
+    return currentUserLoaded;
+  },
+
+  isLoggedIn () {
   },
 
 });
@@ -32,7 +49,8 @@ UserStore.dispatchToken = MoneyAppDispatcher.register(function (action) {
   switch (action.type) {
 
     case ActionTypes.RECEIVE_USER:
-      user = action.user || {};
+      currentUser = action.user;
+      currentUserLoaded = true;
       UserStore.emitChange();
       break;
 
