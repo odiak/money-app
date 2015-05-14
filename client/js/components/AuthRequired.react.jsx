@@ -2,7 +2,7 @@ let React = require('react');
 let {RouteHandler, Navigation} = require('react-router');
 
 let UserStore = require('../stores/UserStore');
-let UserActionCreators = require('../actions/AuthActionCreators');
+let UserActionCreators = require('../actions/UserActionCreators');
 
 var AuthRequired = React.createClass({
   statics: {
