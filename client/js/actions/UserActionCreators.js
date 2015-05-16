@@ -5,7 +5,6 @@ var {ActionTypes} = require('../constants/MoneyAppConstants');
 
 module.exports = {
   loadUser () {
-    console.log('loading');
     request
       .get('/api/user')
       .end((err, res) => {
