@@ -1,21 +1,20 @@
 let React = require('react');
 let {RouteHandler, Navigation} = require('react-router');
 
-let UserStore = require('../stores/UserStore');
-let UserActionCreators = require('../actions/UserActionCreators');
+let AuthService = require('../AuthService');
 
 var AuthRequired = React.createClass({
   statics: {
     willTransitionTo (transition, params, query, callback) {
-      if (UserStore.isLoaded()) {
-        if (!UserStore.get()) {
+      if (AuthService.isUserLoaded()) {
+        if (!AuthService.getUser()) {
           transition.redirect('/login');
         }
         callback();
       } else {
-        UserActionCreators.loadUser();
-        UserStore.once('change', () => {
-          if (!UserStore.get()) {
+        AuthService.loadUser();
+        AuthService.once('authStateChange', () => {
+          if (!AuthService.getUser()) {
             transition.redirect('/login');
           }
           callback();
@@ -24,8 +23,44 @@ var AuthRequired = React.createClass({
     },
   },
 
+  mixins: [Navigation],
+
+  getInitialState () {
+    return {
+      loggedIn: false,
+    };
+  },
+
+  componentDidMount () {
+    if (AuthService.isUserLoaded() && AuthService.getUser()) {
+      this.setState({loggedIn: true});
+      return;
+    }
+
+    AuthService.loadUser();
+    AuthService.on('load', this._onLoadUser);
+    AuthService.on('load:failed', this._onFailedToLoadUser);
+  },
+
+  componentWillUnmount () {
+    AuthService.removeListener('load', this._onLoadUser);
+    AuthService.removeListener('load:failed', this._onFailToLoadUser);
+  },
+
   render () {
-    return <RouteHandler/>;
+    if (this.state.loggedIn) {
+      return <RouteHandler/>;
+    } else {
+      return null;
+    }
+  },
+
+  _onLoadUser () {
+    this.setState({loggedIn: true});
+  },
+
+  _onFailToLoadUser () {
+    this.context.router.transitionTo('/login');
   },
 });
 

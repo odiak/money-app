@@ -3,8 +3,7 @@ var React = require('react/addons');
 var Router = require('react-router');
 var {Navigation} = Router;
 
-var UserActionCreators = require('../actions/UserActionCreators');
-var UserStore = require('../stores/UserStore');
+let AuthService = require('../AuthService');
 
 var Register = React.createClass({
   mixins: [
@@ -21,11 +20,11 @@ var Register = React.createClass({
   },
 
   componentDidMount () {
-    UserStore.addChangeListener(this._handleUserChange);
+    AuthService.on('authStateChange', this._handleUserChange);
   },
 
   componentWillUnmount () {
-    UserStore.removeChangeListener(this._handleUserChange);
+    AuthService.removeListener('authStateChange', this._handleUserChange);
   },
 
   render () {
@@ -55,7 +54,7 @@ var Register = React.createClass({
   },
 
   _handleUserChange () {
-    if (UserStore.get()) {
+    if (AuthService.getUser()) {
       this.context.router.transitionTo('/');
     }
   },

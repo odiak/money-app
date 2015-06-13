@@ -1,21 +1,26 @@
 var React = require('react');
-var {Link} = require('react-router');
+var {Navigation, Link} = require('react-router');
 
-var UserStore = require('../stores/UserStore');
+let AuthService = require('../AuthService')
 
 function getStateFromStore () {
   return {
-    user: UserStore.get(),
+    user: AuthService.getUser(),
   };
 }
 
 var Header = React.createClass({
+  mixins: [Navigation],
+
   getInitialState: function () {
     return getStateFromStore();
   },
 
   componentDidMount: function () {
-    UserStore.addChangeListener(this._onUserChanged);
+    AuthService.on('authStateChange', this._onUserChanged);
+    if (!AuthService.isUserLoaded()) {
+      AuthService.loadUser();
+    }
   },
 
   render: function () {
@@ -23,7 +28,8 @@ var Header = React.createClass({
     var user = this.state.user;
     if (user && user.id) {
       items = [
-        <li key="home"><Link to="app">home</Link></li>,
+        <li key="expenses"><Link to="app">expenses</Link></li>,
+        <li key="logout"><a href="#" onClick={this._logOut}>logout</a></li>,
       ];
     } else {
       items = [
@@ -44,7 +50,13 @@ var Header = React.createClass({
 
   _onUserChanged: function () {
     this.setState(getStateFromStore());
-  }
+  },
+
+  _logOut() {
+    if (!confirm('are you sure?')) return;
+    AuthService.logout();
+    this.context.router.transitionTo('/login');
+  },
 });
 
 module.exports = Header;

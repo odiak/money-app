@@ -16,7 +16,7 @@ var routes = (
     <Route name="register" handler={Register}/>
 
     <Route handler={AuthRequired}>
-      <Route name="expenses" handler={Expenses}/>
+      <Route name="expenses" path="expenses/:year-:month" handler={Expenses}/>
       <DefaultRoute handler={Expenses}/>
     </Route>
   </Route>
