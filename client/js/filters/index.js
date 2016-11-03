@@ -1,6 +1,4 @@
 var Vue = require('vue');
 
-['strftime', 'number']
-.forEach(function (name) {
-  Vue.filter(name, require('./' + name));
-});
+Vue.filter('strftime', require('./strftime'));
+Vue.filter('number', require('./number'));
