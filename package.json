@@ -16,8 +16,8 @@
     "vue": "^0.11.5"
   },
   "scripts": {
-    "build:js": "$(npm bin)/browserify client/js/app.js -o public/dist/app.js -t [ babelify --presets [ es2015 ] ]",
-    "watch:js": "$(npm bin)/watchify client/js/app.js -o public/dist/app.js -t [ babelify --presets [ es2015 ] ]",
+    "build:js": "$(npm bin)/browserify client/js/app.js -o public/dist/app.js -t [ babelify ]",
+    "watch:js": "$(npm bin)/watchify client/js/app.js -o public/dist/app.js -t [ babelify ]",
     "build:css": "$(npm bin)/node-sass client/scss/app.scss -o public/dist",
     "watch:css": "$(npm bin)/node-sass client/scss/app.scss -o public/dist -wr",
     "build": "(npm run build:js & npm run build:css)",
