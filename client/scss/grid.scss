@@ -3,7 +3,7 @@ $selectors: ();
 @for $i from 1 through $grid-nums {
   $length: 100% * ($i / $grid-nums);
 
-  $selectors: $selectors, unquote('.col-#{$i}');
+  $selectors: join($selectors, unquote('.col-#{$i}'), comma);
 
   .col-#{$i} {
     width: $length;
