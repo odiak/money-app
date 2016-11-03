@@ -4,18 +4,23 @@
   "description": "",
   "author": "odiak",
   "devDependencies": {
-    "gulp": "^3.8.10",
-    "gulp-concat": "^2.4.3",
-    "gulp-if": "^1.2.5",
-    "gulp-minify-css": "^0.4.5",
-    "gulp-sass": "^1.3.2",
-    "gulp-uglify": "^1.1.0",
-    "gulp-watch": "^4.1.1",
-    "gulp-webpack": "^1.2.0"
+    "babel-preset-es2015": "^6.18.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
+    "node-sass": "^3.11.0",
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "page": "^1.6.0",
     "superagent": "^0.21.0",
     "vue": "^0.11.5"
+  },
+  "scripts": {
+    "build:js": "$(npm bin)/browserify client/js/app.js -o public/dist/app.js -t [ babelify --presets [ es2015 ] ]",
+    "watch:js": "$(npm bin)/watchify client/js/app.js -o public/dist/app.js -t [ babelify --presets [ es2015 ] ]",
+    "build:css": "$(npm bin)/node-sass client/scss/app.scss -o public/dist --output-style compressed",
+    "watch:css": "$(npm bin)/node-sass client/scss/app.scss -o public/dist -wr",
+    "build": "(npm run build:js & npm run build:css)",
+    "watch": "(npm run build; npm run watch:js & npm run watch:css)"
   }
 }
